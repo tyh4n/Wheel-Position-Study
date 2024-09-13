@@ -1,6 +1,6 @@
 % Created by Tianyi Han, Jun.19 2023
 
-function [r_vec_world, R_wheel2world] = rotation_matrix(phi, params)
+function [r_vec_world, R_world2wheel] = rotation_matrix(phi, params)
 
     % Fetch data from dictionary
     alpha = params("alpha");
