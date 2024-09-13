@@ -9,33 +9,33 @@ function [r_vec_world, R_wheel2world] = rotation_matrix(phi, params)
     r = params("r");
 
     % Create empty cell for rotation matrix
-    R_wheel2body = {[], [], []};
-    R_wheel2world = {[], [], []};
+    R_body2wheel = {[], [], []};
+    R_world2wheel = {[], [], []};
 
     % Calculate rotation matrix
     for i = 1:4
-        if ((params("symmetric_type") == 1) && (mod(i, 2) == 1))
-            R1 = [[cos(beta),  -sin(beta),    0];
-                  [sin(beta),  cos(beta),     0];
-                  [0,           0,              1]];
-        else
-            R1 = [[cos(-beta),  -sin(-beta),    0];
-                  [sin(-beta),  cos(-beta),     0];
-                  [0,           0,              1]];
-        end
+        R1 = [[cos(gamma + i * pi/2),   -sin(gamma + i * pi/2), 0];
+              [sin(gamma + i * pi/2),   cos(gamma + i * pi/2),  0];
+              [0,                       0,                      1]];
         R2 = [[1,   0,                  0             ];
               [0,   cos(alpha - pi),    -sin(alpha - pi)];
               [0,   sin(alpha - pi),    cos(alpha - pi)]];
-        R3 = [[cos(gamma + i * pi/2),   -sin(gamma + i * pi/2), 0];
-              [sin(gamma + i * pi/2),   cos(gamma + i * pi/2),  0];
-              [0,                       0,                      1]];
-        R_wheel2body{i} = R3 * R2 * R1;
+        if ((params("symmetric_type") == 1) && (mod(i, 2) == 1))
+            R3 = [[cos(beta),  -sin(beta),    0];
+                 [sin(beta),  cos(beta),     0];
+                 [0,          0,             1]];
+        else
+            R3 = [[cos(-beta),  -sin(-beta),    0];
+                 [sin(-beta),  cos(-beta),     0];
+                 [0,           0,              1]];
+        end
+        R_body2wheel{i} = R1 * R2 * R3;
     end
-    R_body2world = [[cos(phi),     0,      sin(phi)];
+    R_world2body = [[cos(phi),     0,      sin(phi)];
                     [0,            1,      0,     ];
                     [-sin(phi),    0,      cos(phi)]];
     for i = 1:4
-        R_wheel2world{i} = R_wheel2body{i} * R_body2world;
+        R_world2wheel{i} = R_world2body * R_body2wheel{i};
     end
 
     % Calculate r vector
@@ -43,6 +43,6 @@ function [r_vec_world, R_wheel2world] = rotation_matrix(phi, params)
     r_vec_world = {[], [], []};
     for i = 1:4
         r_vec_body{i} = [r * sin(alpha) * cos(gamma + (i - 1) * pi/2); r * sin(alpha) * sin(gamma + (i - 1) * pi/2); r * cos(alpha)];
-        r_vec_world{i} = R_body2world * r_vec_body{i};
+        r_vec_world{i} = R_world2body * r_vec_body{i};
     end
 end

@@ -67,38 +67,69 @@ traj_sol = double(subs(traj_phi, phi_scale, phi_sol));
 theta_sol = double(subs(theta, phi_scale, phi_sol));
 theta_d_sol = double(subs(theta_d, phi_scale, phi_sol));
 tau_sol = double(subs(tau, phi_scale, phi_sol));
-figure(1);
-subplot(4,1,1);
-plot(t./1000, traj_sol./(pi/180));
-xlabel('Time (s)');
-ylabel('\phi (deg)');
-title('Body angle');
-subplot(4,1,2);
-plot(t./1000, theta_sol);
-xlabel('Time (s)');
-ylabel('\theta (rad)');
-title('Ball angle');
-subplot(4,1,3);
-plot(t./1000, theta_d_sol);
-xlabel('Time (s)');
-ylabel('\theta_d (rad/s)');
-title('Ball speed');
-subplot(4,1,4);
-plot(t./1000, tau_sol);
-xlabel('Time (s)');
-ylabel('\tau (Nm)');
-title('Motor torque');
-sgtitle('Trajectory Optimization');
+% figure(1);
+% subplot(4,1,1);
+% plot(t./1000, traj_sol./(pi/180));
+% xlabel('Time (s)');
+% ylabel('\phi (deg)');
+% title('Body angle');
+% subplot(4,1,2);
+% plot(t./1000, theta_sol);
+% xlabel('Time (s)');
+% ylabel('\theta (rad)');
+% title('Ball angle');
+% subplot(4,1,3);
+% plot(t./1000, theta_d_sol);
+% xlabel('Time (s)');
+% ylabel('\theta_d (rad/s)');
+% title('Ball speed');
+% subplot(4,1,4);
+% plot(t./1000, tau_sol);
+% xlabel('Time (s)');
+% ylabel('\tau (Nm)');
+% title('Motor torque');
+% sgtitle('Trajectory Optimization');
+
+% figure(2);
+% % Plot for the left y-axis (Body angle in radians)
+% yyaxis left
+% plot(t./1000, traj_sol, 'b', 'LineWidth', 2);  
+% xlabel('Time (s)', 'FontSize', 16);             
+% ylabel('\phi (Body angle) [rad]', 'FontSize', 16);
+% ylim([-0.15, 0]);
+% % Plot for the right y-axis (Ball angle in radians)
+% yyaxis right
+% plot(t./1000, theta_sol, 'r', 'LineWidth', 2);  
+% ylabel('\theta (Ball angle) [rad]', 'FontSize', 16);
+% % Add legends to identify the plots, placing it at the bottom right
+% legend('\phi (Body angle) [rad]', '\theta (Ball angle) [rad]', ...
+%        'Location', 'southeast', 'FontSize', 16); 
+
+figure(3);
+% First subplot: Body angle
+subplot(2,1,1);
+plot(t./1000, traj_sol, 'LineWidth', 2);  
+xlabel('Time (s)', 'FontSize', 16);                
+ylabel('\phi (rad)', 'FontSize', 16);
+title('Body angle', 'FontSize', 16);              
+set(gca, 'FontSize', 12);                          
+% Second subplot: Ball angle
+subplot(2,1,2);                                    
+plot(t./1000, theta_sol, 'LineWidth', 2);          
+xlabel('Time (s)', 'FontSize', 16);
+ylabel('\theta (rad)', 'FontSize', 16);
+title('Ball angle', 'FontSize', 16);
+set(gca, 'FontSize', 12);                          
 
 %% Save trajectory
 phi_d_sol = double(subs(phi_d, phi_scale, phi_sol));
 phi_dd_sol = double(subs(phi_dd, phi_scale, phi_sol));
 theta_dd_sol = double(subs(theta_dd, phi_scale, phi_sol));
 time = t./1000;
-save('data/traj_1.mat', 'tau_sol', 'traj_sol', 'phi_d_sol', 'phi_dd_sol', 'theta_dd_sol', 'time');
+% save('data/traj_1.mat', 'tau_sol', 'traj_sol', 'phi_d_sol', 'phi_dd_sol', 'theta_dd_sol', 'time');
 
 %% Visualization
-sim('visualization',t_final/1000);
+% sim('visualization',t_final/1000);
 % For side view, switch to y up and then front view 
 
 %% Equation of motion
