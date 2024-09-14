@@ -24,10 +24,12 @@ params("torque_distribution") = 0;
 % Symmetric type: 0 for center symmetric, 1 for mirror symmetric
 params("symmetric_type") = 1;
 
+
+
 %% Loop through motor configs
-alpha = linspace(30, 80, 6)./(180/pi);      % [rad]
-beta = linspace(-80, 80, 17)./(180/pi);        % [rad]
-gamma = linspace(0, 345, 24)./(180/pi);     % [rad]
+alpha = linspace(30, 60, 7)./(180/pi);      % [rad]
+beta = linspace(0, 15, 7)./(180/pi);      % [rad]
+gamma = linspace(0, 90, 13)./(180/pi);       % [rad]
 
 max_ros_map = zeros([length(beta), length(alpha)]);
 
@@ -50,18 +52,24 @@ for alpha_idx = 1:length(alpha)
 end
 
 %% Save data 
-save('data/ros_map_08152023_mirror.mat', 'alpha', 'beta', 'gamma', 'max_ros_map');
+save('data/ros_map_091324_axis.mat', 'alpha', 'beta', 'gamma', 'max_ros_map');
 
 %% Plot results
 % Plot for center symmetric configuration
 [A, B] = meshgrid(alpha.*(180/pi), beta.*(180/pi));
 figure;
 surf(A, B, max_ros_map);
-xlabel("\alpha (rad)");
-ylabel("\beta (rad)");
-zlabel("Risk of Slip");
-xlim([30, 80]); ylim([-80, 80]); zlim([0, 1]);
-view(-215, 60);
+xlabel('\alpha (rad)', 'FontSize', 16);
+ylabel('\beta (rad)', 'FontSize', 16);
+zlabel('Risk of Slip', 'FontSize', 16);
+xlim([30, 60]);
+ylim([0, 15]);
+zlim([0.15, 0.45]);
+view(45, 45);
+clim([0.17, 0.3]);
+colorbar;
+title('Four-wheel Axis Symmetrical', 'FontSize', 16);
+set(gcf, 'Position', [817, 612, 560, 350]); 
 
 % Plots for mirror configuration
 % [A, B] = meshgrid(alpha.*(180/pi), beta.*(180/pi));

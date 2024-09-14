@@ -12,7 +12,7 @@ params("I_ball") = 0.052;     % Ball inertia [kgm^2]
 params("m_ball") = 4.0;       % Ball mass[kg]
 params("I_body") = 3.0;       % Body inertia [kgm^2]
 params("m_body") = 92;        % Body mass [kg] 
-params("r") = 0.125;          % Ball radius [m]
+params("r") = 0.114;          % Ball radius [m]
 params("l") = 0.45;           % Body length (IP) [m]
 params("g") = 9.81;           % [m/s^2]
 % [NOTE] if parameters above is changed, rerun trajectory optimization
@@ -24,12 +24,14 @@ params("torque_distribution") = 0;
 % Symmetric type: 0 for center symmetric, 1 for mirror symmetric
 params("symmetric_type") = 1;
 
-%% Loop through motor configs
-alpha = linspace(30, 80, 11)./(180/pi);      % [rad]
-beta = linspace(0, 90, 19)./(180/pi);        % [rad]
-gamma = linspace(0, 135, 4)./(180/pi);     % [rad]
 
-max_ros_map = zeros([length(beta), length(alpha), length(gamma)]);
+
+%% Loop through motor configs
+alpha = linspace(30, 60, 7)./(180/pi);      % [rad]
+beta = linspace(0, 15, 4)./(180/pi);      % [rad]
+gamma = linspace(0, 90, 4)./(180/pi);       % [rad]
+
+max_ros_map = zeros([length(beta), length(alpha)]);
 
 for alpha_idx = 1:length(alpha)
     for beta_idx = 1:length(beta)
@@ -43,20 +45,30 @@ for alpha_idx = 1:length(alpha)
             params("gamma") = gamma(gamma_idx);
 
             [max_ros] = ros_calculation(params);
-            max_ros_map(beta_idx, alpha_idx, gamma_idx) = max_ros;
+            max_ros_map(beta_idx, alpha_idx) = max(max_ros_map(beta_idx, alpha_idx), max_ros);
             disp(['Max risk of slip: ', num2str(max_ros)]);
         end
     end
 end
 
 %% Save data 
-save('data/ros_map_07122023_mirror.mat', 'alpha', 'beta', 'gamma', 'max_ros_map');
+save('data/ros_map_091324_mirror.mat', 'alpha', 'beta', 'gamma', 'max_ros_map');
 
 %% Plot results
 % Plot for center symmetric configuration
+[A, B] = meshgrid(alpha.*(180/pi), beta.*(180/pi));
+figure;
+surf(A, B, max_ros_map);
+xlabel("\alpha (rad)");
+ylabel("\beta (rad)");
+zlabel("Risk of Slip");
+xlim([30, 60]); ylim([0, 15]); zlim([0.15, 0.25]);  
+view(-215, 60);
+
+% Plots for mirror configuration
 % [A, B] = meshgrid(alpha.*(180/pi), beta.*(180/pi));
 % figure;
-% subplot(2, 1, 1);
+% subplot(2, 2, 1);
 % surf(A, B, max_ros_map(:, :, 1));
 % xlabel("\alpha (rad)");
 % ylabel("\beta (rad)");
@@ -64,7 +76,7 @@ save('data/ros_map_07122023_mirror.mat', 'alpha', 'beta', 'gamma', 'max_ros_map'
 % title("\gamma = 0^{\circ}");
 % xlim([30, 80]); ylim([0, 90]); zlim([0, 1]);
 % view(-215, 60);
-% subplot(2, 1, 2);
+% subplot(2, 2, 2);
 % surf(A, B, max_ros_map(:, :, 2));
 % xlabel("\alpha (rad)");
 % ylabel("\beta (rad)");
@@ -72,42 +84,22 @@ save('data/ros_map_07122023_mirror.mat', 'alpha', 'beta', 'gamma', 'max_ros_map'
 % title("\gamma = 45^{\circ}");
 % xlim([30, 80]); ylim([0, 90]); zlim([0, 1]);
 % view(-215, 60);
-
-% Plots for mirror configuration
-[A, B] = meshgrid(alpha.*(180/pi), beta.*(180/pi));
-figure;
-subplot(2, 2, 1);
-surf(A, B, max_ros_map(:, :, 1));
-xlabel("\alpha (rad)");
-ylabel("\beta (rad)");
-zlabel("Risk of Slip");
-title("\gamma = 0^{\circ}");
-xlim([30, 80]); ylim([-45, 45]); zlim([0, 1]);
-view(-215, 60);
-subplot(2, 2, 2);
-surf(A, B, max_ros_map(:, :, 2));
-xlabel("\alpha (rad)");
-ylabel("\beta (rad)");
-zlabel("Risk of Slip");
-title("\gamma = 45^{\circ}");
-xlim([30, 80]); ylim([-45, 45]); zlim([0, 1]);
-view(-215, 60);
-subplot(2, 2, 3);
-surf(A, B, max_ros_map(:, :, 3));
-xlabel("\alpha (rad)");
-ylabel("\beta (rad)");
-zlabel("Risk of Slip");
-title("\gamma = 90^{\circ}");
-xlim([30, 80]); ylim([-45, 45]); zlim([0, 1]);
-view(-215, 60);
-subplot(2, 2, 4);
-surf(A, B, max_ros_map(:, :, 4));
-xlabel("\alpha (rad)");
-ylabel("\beta (rad)");
-zlabel("Risk of Slip");
-title("\gamma = 135^{\circ}");
-xlim([30, 80]); ylim([-45, 45]); zlim([0, 1]);
-view(-215, 60);
+% subplot(2, 2, 3);
+% surf(A, B, max_ros_map(:, :, 3));
+% xlabel("\alpha (rad)");
+% ylabel("\beta (rad)");
+% zlabel("Risk of Slip");
+% title("\gamma = 90^{\circ}");
+% xlim([30, 80]); ylim([0, 90]); zlim([0, 1]);
+% view(-215, 60);
+% subplot(2, 2, 4);
+% surf(A, B, max_ros_map(:, :, 4));
+% xlabel("\alpha (rad)");
+% ylabel("\beta (rad)");
+% zlabel("Risk of Slip");
+% title("\gamma = 135^{\circ}");
+% xlim([30, 80]); ylim([0, 90]); zlim([0, 1]);
+% view(-215, 60);
 
 % Plot for gamma angle comparison
 % alpha_idx = 1;

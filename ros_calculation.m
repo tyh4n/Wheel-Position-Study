@@ -49,11 +49,11 @@ function [max_ros] = ros_calculation(params)
     for idx = 1:num_step
         % Calculate roatation matrix
         phi = traj_sol(idx);
-        [r_vec_world, R_wheel2world] = rotation_matrix(phi, params);
+        [r_vec_world, R_world2wheel] = rotation_matrix(phi, params);
 
         % Calculaye stiffness matrix at body frame
         for i = 1:4
-            stiffness_matrix_ball{i} = R_wheel2world{i} * stiffness_matirx_wheel_ball * R_wheel2world{i}';
+            stiffness_matrix_ball{i} = R_world2wheel{i} * stiffness_matirx_wheel_ball * R_world2wheel{i}';
         end
 
         % Calculate simplified A matrix
@@ -71,7 +71,7 @@ function [max_ros] = ros_calculation(params)
         ft_world_frame = {[], [], [], []};
         for i = 1:4
             ft_wheel_frame{i} = [ft(i); 0; 0];
-            ft_world_frame{i} = R_wheel2world{i} * ft_wheel_frame{i};
+            ft_world_frame{i} = R_world2wheel{i} * ft_wheel_frame{i};
         end
     
         % Calculate F_normal in world frame
