@@ -22,9 +22,7 @@ params("k_wheel_ball") = 1e6;   % [N/m]
 % Torque distribution: 0 for conventional, 1 for equal ros
 params("torque_distribution") = 0;
 % Symmetric type: 0 for center symmetric, 1 for mirror symmetric
-params("symmetric_type") = 1;
-
-
+params("symmetric_type") = 0;
 
 %% Loop through motor configs
 alpha = linspace(30, 60, 7)./(180/pi);      % [rad]
@@ -52,7 +50,7 @@ for alpha_idx = 1:length(alpha)
 end
 
 %% Save data 
-save('data/ros_map_091324_axis.mat', 'alpha', 'beta', 'gamma', 'max_ros_map');
+save('data/ros_map_091424_axis.mat', 'alpha', 'beta', 'gamma', 'max_ros_map');
 
 %% Plot results
 % Plot for center symmetric configuration
@@ -65,9 +63,11 @@ zlabel('Risk of Slip', 'FontSize', 16);
 xlim([30, 60]);
 ylim([0, 15]);
 zlim([0.15, 0.45]);
-view(45, 45);
+view(-45, 45);
 clim([0.17, 0.3]);
 colorbar;
+ax = gca;
+ax.FontSize = 14;
 title('Four-wheel Axis Symmetrical', 'FontSize', 16);
 set(gcf, 'Position', [817, 612, 560, 350]); 
 
