@@ -13,7 +13,7 @@ params("r") = 0.114;          % Ball radius [m]
 params("l") = 0.45;           % Body length (IP) [m]
 params("g") = 9.81;           % [m/s^2]
 % Symmetric type: 0 for center symmetric, 1 for mirror symmetric
-params("symmetric_type") = 0;
+params("symmetric_type") = 1;
 
 %% Calculate Hertzian contact model
 Fz = (params("m_ball") + params("m_body")) * params("g");   % Applied external load [N]
@@ -29,8 +29,8 @@ tau_y_max = mu * Fz * params("r");
 disp("Maximum x&y torque allowed: " + num2str(tau_y_max));
 
 %% Loop through motor configs
-alpha = linspace(30, 80, 51)./(180/pi);     % [rad]
-beta = linspace(0, 90, 91)./(180/pi);       % [rad]
+alpha = linspace(30, 60, 7)./(180/pi);      % [rad]
+beta = linspace(0, 15, 7)./(180/pi);        % [rad]
 gamma = 0;                                  % [rad]
 phi = 0;                                    % [rad]
 max_wheel_traction = 9 / 63.5e-3;           % [Nm]
@@ -70,5 +70,5 @@ surf(A, B, max_torque_map);
 xlabel("\alpha (rad)");
 ylabel("\beta (rad)");
 zlabel("Max tau_z");
-xlim([30, 80]); ylim([0, 90]);
+xlim([30, 60]); ylim([0, 15]); zlim([40, 60]);
 view(-215, 60);

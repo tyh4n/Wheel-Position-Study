@@ -46,14 +46,14 @@ end
 % Plot the surface of the new max_ros_map
 figure;
 surf(AlphaGrid, BetaGrid, objective_map);
-xlabel('Alpha (degrees)', 'FontSize', 16);
-ylabel('Beta (degrees)', 'FontSize', 16);
-zlabel('Max Risk of Slip', 'FontSize', 16);
+xlabel('\alpha (rad)', 'FontSize', 16);
+ylabel('\beta (rad)', 'FontSize', 16);
+zlabel('J (Objective Function)', 'FontSize', 16);
 zlim([0, 2]);
 shading interp;  % smoothens the surface appearance
+clim([0, 2]);
 colorbar;
 ax = gca;
 ax.FontSize = 14;
-title('Four-wheel Axis Symmetrical', 'FontSize', 16);
 set(gcf, 'Position', [817, 612, 560, 350]); 
 view(-45, 45);
