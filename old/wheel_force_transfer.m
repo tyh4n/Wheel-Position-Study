@@ -51,7 +51,8 @@ for i = 1:4
     r_vec_body{i} = [r * sin(alpha) * cos(gamma + (i - 1) * pi/2); r * sin(alpha) * sin(gamma + (i - 1) * pi/2); r * cos(alpha)];
     r_vec_world{i} = R_world2body * r_vec_body{i};
 end
-
+disp(r_vec_body{1});
+disp(r_vec_world{1});
 %% Plot Force
 [X,Y,Z] = sphere(100);
 s = surf(X * r, Y * r, Z * r);
