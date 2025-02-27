@@ -17,7 +17,7 @@ params("r") = 0.114;          % Ball radius [m]
 params("l") = 0.45;           % Body length (IP) [m]
 params("g") = 9.81;           % [m/s^2]
 % Symmetric type: 0 for center symmetric, 1 for mirror symmetric
-params("symmetric_type") = 0;
+params("symmetric_type") = 1;
 
 %% Loop through motor configs
 % Set alpha, beta, gamma angle
@@ -34,6 +34,9 @@ tau_step = 0.25;
 max_torque_map = zeros(1, length(gamma),1);
 
 for gamma_idx = 1:length(gamma)
+    % Display current information
+    disp("Current gamma = " + gamma(gamma_idx));
+
     % Init
     tau_motor_max = 0;
     tau_ball_tar = 0;
@@ -86,7 +89,7 @@ for gamma_idx = 1:length(gamma)
 end
 
 %% Save data 
-save('data/max_torque_map_022725_axis.mat', 'alpha', 'beta', 'gamma', 'max_torque_map');
+save('data/max_torque_map_022725_mirror.mat', 'alpha', 'beta', 'gamma', 'max_torque_map');
 
 %%  Plot
 figure(1);
@@ -94,7 +97,7 @@ polarplot(gamma, max_torque_map, 'LineWidth', 2);
 % rlim([0,0.3]);
 ax = gca;
 ax.FontSize = 16;
-title('Four-wheel Axis Symmetrical', 'FontSize', 16);
+title('Four-wheel Mirror Symmetrical', 'FontSize', 16);
 
 %% Show total running time
 toc;
