@@ -23,13 +23,13 @@ params("symmetric_type") = 0;
 % Set alpha, beta, gamma angle
 alpha = 45./(180/pi);                       % [rad]
 beta = 10./(180/pi);                        % [rad]
-gamma = linspace(0, 360, 361)./(180/pi);    % [rad]
+gamma = linspace(0, 360, 73)./(180/pi);      % [rad]
 % Assume in upright position
 phi = 0;                                    % [rad]
 % Motor rated max torque is 20 Nm
 tau_motor_lim = 20;                 % [Nm]
 % Torque increment step
-tau_step = 0.25;
+tau_step = 1e-1;
 
 max_torque_map = zeros(1, length(gamma),1);
 
@@ -86,7 +86,7 @@ for gamma_idx = 1:length(gamma)
 end
 
 %% Save data 
-save('data/max_torque_map_022725_axis.mat', 'alpha', 'beta', 'gamma', 'max_torque_map');
+save('data/max_torque_map_022725_axis.mat', 'alpha', 'beta', 'gamma', 'max_ros_map');
 
 %%  Plot
 figure(1);

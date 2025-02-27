@@ -61,9 +61,14 @@ for gamma_idx = 1:length(gamma)
             v_motor{i} = norm(dot(v_contact, uv_world_frame{i}));
         end
 
-        % Calculate max motor velocity
+        % Calculate resultant spinning torque
+        v_motor_max = 0;
         v_motor_max = max(max(v_motor{1}, v_motor{2}), max(v_motor{3}, v_motor{4}));
     end
+    % display(v_ball_tar);
+    % display(uv_world_frame{1});
+    display(v_contact);
+    % display(v_motor);
 
     max_velocity_map(gamma_idx) = v_ball_tar;
 end
