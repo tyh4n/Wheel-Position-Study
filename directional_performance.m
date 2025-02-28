@@ -22,7 +22,7 @@ params("k_wheel_ball") = 1e6;   % [N/m]
 % Torque distribution: 0 for conventional, 1 for equal ros
 params("torque_distribution") = 0;
 % Symmetric type: 0 for center symmetric, 1 for mirror symmetric
-params("symmetric_type") = 0;
+params("symmetric_type") = 1;
 
 %% Loop through motor configs
 alpha = 45./(180/pi);      % [rad]
@@ -47,7 +47,7 @@ end
 
 
 %% Save data 
-save('data/directional_091424_1.mat', 'gamma', 'max_ros_map');
+save('data/directional_022825_mirror.mat', 'gamma', 'max_ros_map');
 
 %% Plot results
 
