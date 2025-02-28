@@ -16,7 +16,7 @@ params("m_body") = 92;        % Body mass [kg]
 params("r") = 0.114;          % Ball radius [m]
 params("l") = 0.45;           % Body length (IP) [m]
 params("g") = 9.81;           % [m/s^2]
-% Symmetric type: 0 for center symmetric, 1 for mirror symmetric
+% Symmetric type: 0 for axis symmetric, 1 for mirror symmetric
 params("symmetric_type") = 0;
 
 %% Loop through motor configs
