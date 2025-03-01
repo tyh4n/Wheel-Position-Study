@@ -18,7 +18,7 @@ params("symmetric_type") = 1;
 %% Loop through motor configs
 % Set alpha, beta, gamma angle
 alpha = 45./(180/pi);                       % [rad]
-beta = 10./(180/pi);                        % [rad]
+beta = 0./(180/pi);                        % [rad]
 gamma = linspace(0, 360, 361)./(180/pi);      % [rad]
 % Assume in upright position
 phi = 0;                                    % [rad]
@@ -69,7 +69,7 @@ for gamma_idx = 1:length(gamma)
 end
 
 %% Save data 
-save('data/max_velocity_map_022825_mirror.mat', 'alpha', 'beta', 'gamma', 'max_velocity_map');
+save('data/max_velocity_map_beta0_mirror.mat', 'alpha', 'beta', 'gamma', 'max_velocity_map');
 
 %%  Plot
 figure(1);

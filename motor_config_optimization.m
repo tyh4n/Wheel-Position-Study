@@ -56,7 +56,8 @@ save('data/ros_map_091424_axis.mat', 'alpha', 'beta', 'gamma', 'max_ros_map');
 % Plot for center symmetric configuration
 [A, B] = meshgrid(alpha.*(180/pi), beta.*(180/pi));
 figure;
-surf(A, B, max_ros_map);
+surf(A, B, max_ros_map, 'EdgeColor', 'none');
+shading interp;
 xlabel('\alpha (rad)', 'FontSize', 16);
 ylabel('\beta (rad)', 'FontSize', 16);
 zlabel('Risk of Slip', 'FontSize', 16);
@@ -64,7 +65,7 @@ xlim([30, 60]);
 ylim([0, 15]);
 zlim([0.15, 0.45]);
 view(-45, 45);
-clim([0.17, 0.3]);
+clim([0.18, 0.28]);
 colorbar;
 ax = gca;
 ax.FontSize = 14;

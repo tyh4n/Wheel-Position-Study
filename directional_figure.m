@@ -5,7 +5,7 @@
 
 %% Init
 figure(1);
-set(gcf, 'Position', [100, 100, 600, 900]);
+set(gcf, 'Position', [100, 100, 800, 400]);
 
 %% Load and plot data for axis symmetrical ROS
 clear;
@@ -18,14 +18,14 @@ gamma_extended = linspace(0, 2 * pi, length(max_ros_map_extended));
 % Rotate plot 45 degrees counter-clockwise to match actual heading angle
 gamma_extended = gamma_extended + pi/4;
 
-subplot(3, 2, 1);
+subplot(1, 2, 1);
 polarplot(gamma_extended, max_ros_map_extended, 'LineWidth', 2);
 rlim([0,0.3]);
 ax = gca;
 ax.FontSize = 16;
 % Set 0 degrees to be at the top
 ax.ThetaZeroLocation = 'top';
-title('ROS (axis)', 'FontSize', 16);
+title('ROS (Axis)', 'FontSize', 16);
 
 %% Load and plot data for mirror symmetrical ROS
 clear;
@@ -38,75 +38,139 @@ gamma_extended = linspace(0, 2 * pi, length(max_ros_map_extended));
 % Rotate plot 45 degrees counter-clockwise to match actual heading angle
 gamma_extended = gamma_extended + pi/4;
 
-subplot(3, 2, 2);
+subplot(1, 2, 2);
 polarplot(gamma_extended, max_ros_map_extended, 'LineWidth', 2);
 rlim([0,0.3]);
 ax = gca;
 ax.FontSize = 16;
 % Set 0 degrees to be at the top
 ax.ThetaZeroLocation = 'top';
-title('ROS (mirror)', 'FontSize', 16);
+title('ROS (Mirror)', 'FontSize', 16);
+
+%%
+figure(2);
+set(gcf, 'Position', [200, 200, 800, 800]);
 
 %% Load and plot data for axis symmetrical velocity
 clear;
-load("data/max_velocity_map_022825_axis.mat");
 
+subplot(2, 2, 1);
+
+load("data/max_velocity_map_beta0_axis.mat");
 % Rotate plot 45 degrees counter-clockwise to match actual heading angle
-gamma = gamma + pi/4;
-
-subplot(3, 2, 3);
+gamma = gamma + pi/4; 
 polarplot(gamma, max_velocity_map, 'LineWidth', 2);
-rlim([0, 8]);
+hold on;
+
+load("data/max_velocity_map_beta5_axis.mat");
+gamma = gamma + pi/4; 
+polarplot(gamma, max_velocity_map, 'LineWidth', 2);
+
+load("data/max_velocity_map_022825_axis.mat");
+gamma = gamma + pi/4;
+polarplot(gamma, max_velocity_map, 'LineWidth', 2);
+
+load("data/max_velocity_map_beta15_axis.mat");
+gamma = gamma + pi/4;
+% polarplot(gamma, max_velocity_map, 'LineWidth', 2);
+
+rlim([0, 7]);
+rticks(0:2:6);
 ax = gca;
 ax.FontSize = 16;
 % Set 0 degrees to be at the top
 ax.ThetaZeroLocation = 'top';
-title('max velocity (axis)', 'FontSize', 16);
+title('Max Velocity (Axis)', 'FontSize', 16);
 
 %% Load and plot data for mirror symmetrical velocity
 clear;
-load("data/max_velocity_map_022825_mirror.mat");
 
+subplot(2, 2, 2);
+
+load("data/max_velocity_map_beta0_mirror.mat");
 % Rotate plot 45 degrees counter-clockwise to match actual heading angle
 gamma = gamma + pi/4;
-
-subplot(3, 2, 4);
 polarplot(gamma, max_velocity_map, 'LineWidth', 2);
-rlim([0, 8]);
+hold on;
+
+load("data/max_velocity_map_beta5_mirror.mat");
+gamma = gamma + pi/4;
+polarplot(gamma, max_velocity_map, 'LineWidth', 2);
+
+load("data/max_velocity_map_022825_mirror.mat");
+gamma = gamma + pi/4;
+polarplot(gamma, max_velocity_map, 'LineWidth', 2);
+
+load("data/max_velocity_map_beta15_mirror.mat");
+gamma = gamma + pi/4;
+% polarplot(gamma, max_velocity_map, 'LineWidth', 2);
+
+rlim([0, 7]);
+rticks(0:2:6);
 ax = gca;
 ax.FontSize = 16;
 % Set 0 degrees to be at the top
 ax.ThetaZeroLocation = 'top';
-title('max velocity (mirror)', 'FontSize', 16);
+title('Max Velocity (Mirror)', 'FontSize', 16);
 
 %% Load and plot data for axis symmetrical torque
 clear;
-load("data/max_torque_map_022725_axis.mat");
 
+subplot(2, 2, 3);
+
+load("data/max_torque_map_beta0_axis.mat");
 % Rotate plot 45 degrees counter-clockwise to match actual heading angle
 gamma = gamma + pi/4;
-
-subplot(3, 2, 5);
 polarplot(gamma, max_torque_map, 'LineWidth', 2);
-rlim([0, 100]);
+hold on;
+
+load("data/max_torque_map_beta5_axis.mat");
+gamma = gamma + pi/4;
+polarplot(gamma, max_torque_map, 'LineWidth', 2);
+
+load("data/max_torque_map_022725_axis.mat");
+gamma = gamma + pi/4;
+polarplot(gamma, max_torque_map, 'LineWidth', 2);
+
+load("data/max_torque_map_beta15_axis.mat");
+gamma = gamma + pi/4;
+% polarplot(gamma, max_torque_map, 'LineWidth', 2);
+
+rlim([0, 90]);
+rticks(0:30:90);
 ax = gca;
 ax.FontSize = 16;
 % Set 0 degrees to be at the top
 ax.ThetaZeroLocation = 'top';
-title('max torque (axis)', 'FontSize', 16);
+title('Max Torque (Axis)', 'FontSize', 16);
 
 %% Load and plot data for mirror symmetrical torque
 clear;
-load("data/max_torque_map_022725_mirror.mat");
 
+subplot(2, 2, 4);
+
+load("data/max_torque_map_beta0_axis.mat");
 % Rotate plot 45 degrees counter-clockwise to match actual heading angle
 gamma = gamma + pi/4;
-
-subplot(3, 2, 6);
 polarplot(gamma, max_torque_map, 'LineWidth', 2);
-rlim([0, 100]);
+hold on;
+
+load("data/max_torque_map_beta5_mirror.mat");
+gamma = gamma + pi/4;
+polarplot(gamma, max_torque_map, 'LineWidth', 2);
+
+load("data/max_torque_map_022725_mirror.mat");
+gamma = gamma + pi/4;
+polarplot(gamma, max_torque_map, 'LineWidth', 2);
+
+load("data/max_torque_map_beta15_mirror.mat");
+gamma = gamma + pi/4;
+% polarplot(gamma, max_torque_map, 'LineWidth', 2);
+
+rlim([0, 90]);
+rticks(0:30:90);
 ax = gca;
 ax.FontSize = 16;
 % Set 0 degrees to be at the top
 ax.ThetaZeroLocation = 'top';
-title('max torque (mirror)', 'FontSize', 16);
+title('Max Torque (Mirror)', 'FontSize', 16);

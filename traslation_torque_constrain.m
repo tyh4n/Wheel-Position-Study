@@ -16,13 +16,13 @@ params("m_body") = 92;        % Body mass [kg]
 params("r") = 0.114;          % Ball radius [m]
 params("l") = 0.45;           % Body length (IP) [m]
 params("g") = 9.81;           % [m/s^2]
-% Symmetric type: 0 for center symmetric, 1 for mirror symmetric
-params("symmetric_type") = 1;
+% Symmetric type: 0 for axis symmetric, 1 for mirror symmetric
+params("symmetric_type") = 0;
 
 %% Loop through motor configs
 % Set alpha, beta, gamma angle
 alpha = 45./(180/pi);                       % [rad]
-beta = 10./(180/pi);                        % [rad]
+beta = 0./(180/pi);                        % [rad]
 gamma = linspace(0, 360, 361)./(180/pi);    % [rad]
 % Assume in upright position
 phi = 0;                                    % [rad]
@@ -39,7 +39,7 @@ for gamma_idx = 1:length(gamma)
 
     % Init
     tau_motor_max = 0;
-    tau_ball_tar = 0;
+    tau_ball_tar = 40; % a resonable guess to save time :)
 
     while (tau_motor_max <= tau_motor_lim)
         tau_ball_tar = tau_ball_tar + tau_step;
@@ -89,7 +89,7 @@ for gamma_idx = 1:length(gamma)
 end
 
 %% Save data 
-save('data/max_torque_map_022725_mirror.mat', 'alpha', 'beta', 'gamma', 'max_torque_map');
+save('data/max_torque_map_beta0_axis.mat', 'alpha', 'beta', 'gamma', 'max_torque_map');
 
 %%  Plot
 figure(1);
