@@ -25,7 +25,28 @@ ax = gca;
 ax.FontSize = 16;
 % Set 0 degrees to be at the top
 ax.ThetaZeroLocation = 'top';
-title('ROS (Axis)', 'FontSize', 16);
+title('Risk of Slip (Axis)', 'FontSize', 16);
+
+%% Manually adjust ticks location
+
+% Set radial ticks
+rticks([0, 0.1, 0.2, 0.3]);
+
+% Remove default radial tick labels
+ax.RTickLabels = {};
+
+% Manually add radial tick labels with an offset to move them lower
+rtickvalues = ax.RTick; % Get radial tick values
+offset = -0.03; % Adjust this value to move labels lower (negative for downward shift)
+
+for i = 1:length(rtickvalues)
+% Place text at the correct radial position (0 degrees for alignment)
+text(0, rtickvalues(i)+offset, num2str(rtickvalues(i)), ...
+'Rotation', 0, ... % No rotation (vertical)
+'HorizontalAlignment', 'center', ... % Center horizontally
+'VerticalAlignment', 'bottom', ... % Align at the bottom
+'FontSize', ax.FontSize); % Match font size
+end
 
 %% Load and plot data for mirror symmetrical ROS
 clear;
@@ -45,7 +66,28 @@ ax = gca;
 ax.FontSize = 16;
 % Set 0 degrees to be at the top
 ax.ThetaZeroLocation = 'top';
-title('ROS (Mirror)', 'FontSize', 16);
+title('Risk of Slip (Mirror)', 'FontSize', 16);
+
+%% Manually adjust ticks location
+
+% Set radial ticks
+rticks([0, 0.1, 0.2, 0.3]);
+
+% Remove default radial tick labels
+ax.RTickLabels = {};
+
+% Manually add radial tick labels with an offset to move them lower
+rtickvalues = ax.RTick; % Get radial tick values
+offset = -0.03; % Adjust this value to move labels lower (negative for downward shift)
+
+for i = 1:length(rtickvalues)
+% Place text at the correct radial position (0 degrees for alignment)
+text(0, rtickvalues(i)+offset, num2str(rtickvalues(i)), ...
+'Rotation', 0, ... % No rotation (vertical)
+'HorizontalAlignment', 'center', ... % Center horizontally
+'VerticalAlignment', 'bottom', ... % Align at the bottom
+'FontSize', ax.FontSize); % Match font size
+end
 
 %%
 figure(2);
@@ -82,6 +124,27 @@ ax.FontSize = 16;
 ax.ThetaZeroLocation = 'top';
 title('Max Velocity (Axis)', 'FontSize', 16);
 
+%% Manually adjust ticks location
+
+% Set radial ticks
+rticks([0, 2, 4, 6]);
+
+% Remove default radial tick labels
+ax.RTickLabels = {};
+
+% Manually add radial tick labels with an offset to move them lower
+rtickvalues = ax.RTick; % Get radial tick values
+offset = -0.7; % Adjust this value to move labels lower (negative for downward shift)
+
+for i = 1:length(rtickvalues)
+% Place text at the correct radial position (0 degrees for alignment)
+text(0, rtickvalues(i)+offset, num2str(rtickvalues(i)), ...
+'Rotation', 0, ... % No rotation (vertical)
+'HorizontalAlignment', 'center', ... % Center horizontally
+'VerticalAlignment', 'bottom', ... % Align at the bottom
+'FontSize', ax.FontSize); % Match font size
+end
+
 %% Load and plot data for mirror symmetrical velocity
 clear;
 
@@ -112,6 +175,27 @@ ax.FontSize = 16;
 % Set 0 degrees to be at the top
 ax.ThetaZeroLocation = 'top';
 title('Max Velocity (Mirror)', 'FontSize', 16);
+
+%% Manually adjust ticks location
+
+% Set radial ticks
+rticks([0, 2, 4, 6]);
+
+% Remove default radial tick labels
+ax.RTickLabels = {};
+
+% Manually add radial tick labels with an offset to move them lower
+rtickvalues = ax.RTick; % Get radial tick values
+offset = -0.7; % Adjust this value to move labels lower (negative for downward shift)
+
+for i = 1:length(rtickvalues)
+% Place text at the correct radial position (0 degrees for alignment)
+text(0, rtickvalues(i)+offset, num2str(rtickvalues(i)), ...
+'Rotation', 0, ... % No rotation (vertical)
+'HorizontalAlignment', 'center', ... % Center horizontally
+'VerticalAlignment', 'bottom', ... % Align at the bottom
+'FontSize', ax.FontSize); % Match font size
+end
 
 %% Load and plot data for axis symmetrical torque
 clear;
@@ -144,6 +228,27 @@ ax.FontSize = 16;
 ax.ThetaZeroLocation = 'top';
 title('Max Torque (Axis)', 'FontSize', 16);
 
+%% Manually adjust ticks location
+
+% Set radial ticks
+rticks([0, 30, 60, 90]);
+
+% Remove default radial tick labels
+ax.RTickLabels = {};
+
+% Manually add radial tick labels with an offset to move them lower
+rtickvalues = ax.RTick; % Get radial tick values
+offset = -10; % Adjust this value to move labels lower (negative for downward shift)
+
+for i = 1:length(rtickvalues)
+% Place text at the correct radial position (0 degrees for alignment)
+text(0, rtickvalues(i)+offset, num2str(rtickvalues(i)), ...
+'Rotation', 0, ... % No rotation (vertical)
+'HorizontalAlignment', 'center', ... % Center horizontally
+'VerticalAlignment', 'bottom', ... % Align at the bottom
+'FontSize', ax.FontSize); % Match font size
+end
+
 %% Load and plot data for mirror symmetrical torque
 clear;
 
@@ -174,3 +279,24 @@ ax.FontSize = 16;
 % Set 0 degrees to be at the top
 ax.ThetaZeroLocation = 'top';
 title('Max Torque (Mirror)', 'FontSize', 16);
+
+%% Manually adjust ticks location
+
+% Set radial ticks
+rticks([0, 30, 60, 90]);
+
+% Remove default radial tick labels
+ax.RTickLabels = {};
+
+% Manually add radial tick labels with an offset to move them lower
+rtickvalues = ax.RTick; % Get radial tick values
+offset = -10; % Adjust this value to move labels lower (negative for downward shift)
+
+for i = 1:length(rtickvalues)
+% Place text at the correct radial position (0 degrees for alignment)
+text(0, rtickvalues(i)+offset, num2str(rtickvalues(i)), ...
+'Rotation', 0, ... % No rotation (vertical)
+'HorizontalAlignment', 'center', ... % Center horizontally
+'VerticalAlignment', 'bottom', ... % Align at the bottom
+'FontSize', ax.FontSize); % Match font size
+end
