@@ -27,7 +27,7 @@ params("symmetric_type") = 1;
 %% Loop through motor configs
 alpha = linspace(45, 45, 1)./(180/pi);      % [rad]
 beta = linspace(0, 15, 4)./(180/pi);      % [rad]
-gamma = linspace(0, 360, 37)./(180/pi);       % [rad]
+gamma = linspace(0, 360, 121)./(180/pi);       % [rad]
 
 max_ros_map = zeros([length(beta), length(gamma)]);
 
@@ -50,7 +50,7 @@ for alpha_idx = 1:length(alpha)
 end
 
 %% Save data 
-save('data/ros_map_022227_mirror.mat', 'alpha', 'beta', 'gamma', 'max_ros_map');
+save('data/ros_map_022426_mirror_alpha45_3d_high_res.mat', 'alpha', 'beta', 'gamma', 'max_ros_map');
 
 %% Plot results
 % Plot for center symmetric configuration
