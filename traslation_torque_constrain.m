@@ -22,7 +22,7 @@ params("symmetric_type") = 1;
 %% Loop through motor configs
 % Set alpha, beta, gamma angle
 alpha = 45./(180/pi);                       % [rad]
-beta = 10./(180/pi);                        % [rad]
+beta = linspace(0, 15, 4)./(180/pi);        % [rad]
 gamma = linspace(0, 360, 361)./(180/pi);    % [rad]
 % Assume in upright position
 phi = 0;                                    % [rad]
@@ -31,65 +31,77 @@ tau_motor_lim = 20;                 % [Nm]
 % Torque increment step
 tau_step = 0.25;
 
-max_torque_map = zeros(1, length(gamma),1);
+max_torque_map = zeros(length(beta), length(gamma));
 
-for gamma_idx = 1:length(gamma)
-    % Display current information
-    disp("Current gamma = " + gamma(gamma_idx));
-
-    % Init
-    tau_motor_max = 0;
-    tau_ball_tar = 0;
-
-    while (tau_motor_max <= tau_motor_lim)
-        tau_ball_tar = tau_ball_tar + tau_step;
-
-        % Calculet ball torque in world frame
-        tau_ball_world = [0; tau_ball_tar; 0];
-
-        params("alpha") = alpha;
-        params("beta") = beta;
-        params("gamma") = gamma(gamma_idx);
+for beta_idx = 1:length(beta)
+    for gamma_idx = 1:length(gamma)
+        % Display current information
+        disp("Current beta = " + beta(beta_idx))./(180/pi);
+        disp("Current gamma = " + gamma(gamma_idx))./(180/pi);
     
-        % Calculate roatation matrix
-        [r_vec_world, R_wheel2world] = rotation_matrix(phi, params);
+        % Init
+        tau_motor_max = 0;
+        tau_ball_tar = 0;
+        tau_ball_l = 30;
+        tau_ball_r = 120;
     
-        syms ft1 ft2 ft3 ft4; % Traction force at each wheel [N]
-        ft = [ft1, ft2, ft3, ft4];
-
-        % Calculate F_traction in world frame
-        ft_wheel_frame = {[], [], [], []};
-        ft_world_frame = {[], [], [], []};
-        for i = 1:4
-            ft_wheel_frame{i} = [ft(i); 0; 0];
-            ft_world_frame{i} = R_wheel2world{i} * ft_wheel_frame{i};
-        end
-
-        % F_normal in stationary case is simply the body weight
-        fn_total = [0; 0; -params("m_body") * params("g")];
-        f_ground_ball_normal = [0; 0; (params("m_body") + params("m_ball"))* params("g")];
-
-        % Tau equilibrium
-        eqn1 = tau_ball_world == cross(r_vec_world{1}, ft_world_frame{1}) + cross(r_vec_world{2}, ...
-            ft_world_frame{2}) + cross(r_vec_world{3}, ft_world_frame{3}) + cross(r_vec_world{4}, ft_world_frame{4});
-
-        % Traction distribution method constrain
-        eqn3 = ft1 == - ft3;
+        while ((tau_ball_r - tau_ball_l) > tau_step)
+            tau_ball_tar = (tau_ball_l + tau_ball_r) / 2;
+    
+            % Calculet ball torque in world frame
+            tau_ball_world = [0; tau_ball_tar; 0];
+    
+            params("alpha") = alpha;
+            params("beta") = beta(beta_idx);
+            params("gamma") = gamma(gamma_idx);
         
-        % Solve multi-variables function
-        eqns = [eqn1; eqn3];
-        S = solve(eqns,[ft1 ft2 ft3 ft4]);
-        ft_sol = double(subs(ft, S));
+            % Calculate roatation matrix
+            [r_vec_world, R_wheel2world] = rotation_matrix(phi, params);
+        
+            syms ft1 ft2 ft3 ft4; % Traction force at each wheel [N]
+            ft = [ft1, ft2, ft3, ft4];
+    
+            % Calculate F_traction in world frame
+            ft_wheel_frame = {[], [], [], []};
+            ft_world_frame = {[], [], [], []};
+            for i = 1:4
+                ft_wheel_frame{i} = [ft(i); 0; 0];
+                ft_world_frame{i} = R_wheel2world{i} * ft_wheel_frame{i};
+            end
+    
+            % F_normal in stationary case is simply the body weight
+            fn_total = [0; 0; -params("m_body") * params("g")];
+            f_ground_ball_normal = [0; 0; (params("m_body") + params("m_ball"))* params("g")];
+    
+            % Tau equilibrium
+            eqn1 = tau_ball_world == cross(r_vec_world{1}, ft_world_frame{1}) + cross(r_vec_world{2}, ...
+                ft_world_frame{2}) + cross(r_vec_world{3}, ft_world_frame{3}) + cross(r_vec_world{4}, ft_world_frame{4});
+    
+            % Traction distribution method constrain
+            eqn3 = ft1 == - ft3;
+            
+            % Solve multi-variables function
+            eqns = [eqn1; eqn3];
+            S = solve(eqns,[ft1 ft2 ft3 ft4]);
+            ft_sol = double(subs(ft, S));
+    
+            % Calculate max motor torque
+            tau_motor_max = max(max(ft_sol(1), ft_sol(2)), max(ft_sol(3), ft_sol(4))) * 0.0625;
 
-        % Calculate max motor torque
-        tau_motor_max = max(max(ft_sol(1), ft_sol(2)), max(ft_sol(3), ft_sol(4))) * 0.0625;
+            % Next step
+            if (tau_motor_max < tau_motor_lim) 
+                tau_ball_l = tau_ball_tar; % Update lower bound for next iteration
+            else
+                tau_ball_r = tau_ball_tar; % Update upper bound for next iteration
+            end
+        end
+    
+        max_torque_map(beta_idx, gamma_idx) = tau_ball_tar;
     end
-
-    max_torque_map(gamma_idx) = tau_ball_tar;
 end
 
 %% Save data 
-save('data/max_torque_map_022725_mirror.mat', 'alpha', 'beta', 'gamma', 'max_torque_map');
+save('data/torque_map_022726_mirror.mat', 'alpha', 'beta', 'gamma', 'max_torque_map');
 
 %%  Plot
 figure(1);

@@ -107,19 +107,42 @@ tau_sol = double(subs(tau, phi_scale, phi_sol));
 
 figure(3);
 % First subplot: Body angle
-subplot(2,1,1);
+subplot(3,1,1);
 plot(t./1000, traj_sol, 'LineWidth', 2);  
+ylim([-0.12, 0]);
 xlabel('Time (s)', 'FontSize', 16);                
 ylabel('\phi (rad)', 'FontSize', 16);
-title('Body angle', 'FontSize', 16);              
-set(gca, 'FontSize', 12);                          
+title('a) Body angle', 'FontSize', 16);              
+set(gca, 'FontSize', 12);   
+
 % Second subplot: Ball angle
-subplot(2,1,2);                                    
-plot(t./1000, theta_sol, 'LineWidth', 2);          
+subplot(3,1,2);                                    
+plot(t./1000, theta_sol, 'LineWidth', 2);    
+ylim([0, 12]);
 xlabel('Time (s)', 'FontSize', 16);
 ylabel('\theta (rad)', 'FontSize', 16);
-title('Ball angle', 'FontSize', 16);
-set(gca, 'FontSize', 12);                          
+title('b) Ball angle', 'FontSize', 16);
+set(gca, 'FontSize', 12);    
+
+% Third subplot: Torque
+subplot(3,1,3);
+plot(t./1000, tau_sol, 'LineWidth', 2);
+ylim([-12, 0]);
+xlabel('Time (s)', 'FontSize', 16);
+ylabel('\tau (Nm)', 'FontSize', 16);
+title('c) Total motor torque', 'FontSize', 16);
+set(gca, 'FontSize', 12);
+
+% Define the dimensions in inches
+fig_width = 6.4; 
+fig_height = 8.0; 
+
+% Apply to the current figure window
+set(gcf, 'Units', 'inches');
+set(gcf, 'Position', [1, 1, fig_width, fig_height]);
+
+% Ensure the export respects these exact dimensions (crucial for PDF/EPS)
+set(gcf, 'PaperPositionMode', 'auto');
 
 %% Save trajectory
 phi_d_sol = double(subs(phi_d, phi_scale, phi_sol));
