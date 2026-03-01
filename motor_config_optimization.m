@@ -22,12 +22,12 @@ params("k_wheel_ball") = 1e6;   % [N/m]
 % Torque distribution: 0 for conventional, 1 for equal ros
 params("torque_distribution") = 0;
 % Symmetric type: 0 for center symmetric, 1 for mirror symmetric
-params("symmetric_type") = 0;
+params("symmetric_type") = 1;
 
 %% Loop through motor configs
-alpha = linspace(30, 60, 7)./(180/pi);      % [rad]
-beta = linspace(0, 15, 7)./(180/pi);      % [rad]
-gamma = linspace(0, 90, 13)./(180/pi);       % [rad]
+alpha = linspace(30, 60, 31)./(180/pi);      % [rad]
+beta = linspace(0, 15, 4)./(180/pi);      % [rad]
+gamma = linspace(315, 315, 1)./(180/pi);       % [rad]
 
 max_ros_map = zeros([length(beta), length(alpha)]);
 
@@ -50,7 +50,7 @@ for alpha_idx = 1:length(alpha)
 end
 
 %% Save data 
-save('data/ros_map_091424_axis.mat', 'alpha', 'beta', 'gamma', 'max_ros_map');
+save('data/ros_map_020226_mirror_31a_4b_1g.mat', 'alpha', 'beta', 'gamma', 'max_ros_map');
 
 %% Plot results
 % Plot for center symmetric configuration

@@ -110,32 +110,41 @@ figure(3);
 subplot(3,1,1);
 plot(t./1000, traj_sol, 'LineWidth', 2);  
 ylim([-0.12, 0]);
+grid on;
 xlabel('Time (s)', 'FontSize', 16);                
 ylabel('\phi (rad)', 'FontSize', 16);
-title('a) Body angle', 'FontSize', 16);              
-set(gca, 'FontSize', 12);   
+title('(a) Body angle', 'FontSize', 16);    
+ax = gca;
+ax.FontSize = 12;
+ax.FontName = 'Times New Roman';
 
 % Second subplot: Ball angle
 subplot(3,1,2);                                    
 plot(t./1000, theta_sol, 'LineWidth', 2);    
 ylim([0, 12]);
+grid on;
 xlabel('Time (s)', 'FontSize', 16);
 ylabel('\theta (rad)', 'FontSize', 16);
-title('b) Ball angle', 'FontSize', 16);
-set(gca, 'FontSize', 12);    
+title('(b) Ball angle', 'FontSize', 16);
+ax = gca;
+ax.FontSize = 12;
+ax.FontName = 'Times New Roman';
 
 % Third subplot: Torque
 subplot(3,1,3);
 plot(t./1000, tau_sol, 'LineWidth', 2);
 ylim([-12, 0]);
+grid on;
 xlabel('Time (s)', 'FontSize', 16);
 ylabel('\tau (Nm)', 'FontSize', 16);
-title('c) Total motor torque', 'FontSize', 16);
-set(gca, 'FontSize', 12);
+title('(c) Total motor torque', 'FontSize', 16);
+ax = gca;
+ax.FontSize = 12;
+ax.FontName = 'Times New Roman';
 
 % Define the dimensions in inches
 fig_width = 6.4; 
-fig_height = 8.0; 
+fig_height = 5; 
 
 % Apply to the current figure window
 set(gcf, 'Units', 'inches');
