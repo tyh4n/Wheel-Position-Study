@@ -33,7 +33,7 @@ alpha = linspace(30, 60, 7)./(180/pi);      % [rad]
 beta = linspace(0, 15, 7)./(180/pi);        % [rad]
 gamma = 0;                                  % [rad]
 phi = 0;                                    % [rad]
-max_wheel_traction = 9 / 63.5e-3;           % [Nm]
+max_wheel_traction = 7 / 63.5e-3;           % [Nm]
 
 max_torque_map = zeros([length(beta), length(alpha)]);
 
@@ -63,6 +63,9 @@ for alpha_idx = 1:length(alpha)
     end
 end
 
+%% Save data 
+save('data/rotation_map_020226_7x7.mat', 'alpha', 'beta', 'gamma', 'max_torque_map');
+
 %%  Plot
 [A, B] = meshgrid(alpha.*(180/pi), beta.*(180/pi));
 figure;
@@ -70,5 +73,5 @@ surf(A, B, max_torque_map);
 xlabel("\alpha (rad)");
 ylabel("\beta (rad)");
 zlabel("Max tau_z");
-xlim([30, 60]); ylim([0, 15]); zlim([40, 60]);
+xlim([30, 60]); ylim([0, 15]); zlim([30, 60]);
 view(-215, 60);

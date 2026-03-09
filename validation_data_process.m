@@ -38,9 +38,9 @@ ros_lower_limit = -1.0;
 % Adjust the lengths and values of these arrays based on the valid moves in your data
 % Example assumes roughly 8-9 moves per section for a total of 25
 selectors = {
-    [0, 1, 1, 1, 0], ...       % Section 1
-    [0, 0, 1, 0, 1, 0, 1, 0, 0], ...       % Section 2
-    [0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1]         % Section 3
+    [0, 0, 1, 1, 0], ...       % Section 1
+    [0, 1, 0, 0, 0, 0, 1, 0, 0], ...       % Section 2
+    [0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0]         % Section 3
 };
 
 % Initialize storage

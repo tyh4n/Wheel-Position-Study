@@ -31,7 +31,7 @@ ax.FontSize = 14;
 ax.FontName = 'Times New Roman';
 % Set 0 degrees to be at the top
 ax.ThetaZeroLocation = 'top';
-title('(a) F_{ROS} -axis', 'FontSize', 14);
+title('(a) ROS_{max} -axis', 'FontSize', 14);
 
 %% Load and plot data for mirror symmetrical ROS
 clear;
@@ -57,7 +57,7 @@ ax.FontSize = 14;
 ax.FontName = 'Times New Roman';
 % Set 0 degrees to be at the top
 ax.ThetaZeroLocation = 'top';
-title('(c) F_{ROS} -mirror', 'FontSize', 14);
+title('(c) ROS_{max} -mirror', 'FontSize', 14);
 
 %% Load and plot data for axis symmetrical torque
 clear;
@@ -75,7 +75,7 @@ ax.FontSize = 14;
 ax.FontName = 'Times New Roman';
 % Set 0 degrees to be at the top
 ax.ThetaZeroLocation = 'top';
-title('(b) Longitudinal \tau_{max} -axis', 'FontSize', 14);
+title('(b) Translation \tau_{max} -axis', 'FontSize', 14);
 
 %% Load and plot data for mirror symmetrical torque
 clear;
@@ -93,4 +93,4 @@ ax.FontSize = 14;
 ax.FontName = 'Times New Roman';
 % Set 0 degrees to be at the top
 ax.ThetaZeroLocation = 'top';
-title('(d) Longitudinal \tau_{max} -mirror', 'FontSize', 14);
+title('(d) Translation \tau_{max} -mirror', 'FontSize', 14);
